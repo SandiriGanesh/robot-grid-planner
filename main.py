@@ -40,6 +40,21 @@ def get_possible_moves(grid, position):
 
     return moves
 
+def move(position, direction):
+    row, col = position
+
+    if direction == "up":
+        return (row - 1, col)
+
+    elif direction == "down":
+        return (row + 1, col)
+
+    elif direction == "left":
+        return (row, col - 1)
+
+    elif direction == "right":
+        return (row, col + 1)
+
 start_position = find_position(grid, "S")
 goal_position = find_position(grid, "G")
 
@@ -49,3 +64,10 @@ print("Goal Position:", goal_position)
 possible_moves = get_possible_moves(grid, start_position)
 
 print("Possible Moves:", possible_moves)
+
+for direction in possible_moves:
+
+    new_position = move(start_position, direction)
+
+    print(f"\nMove: {direction}")
+    print("New Position:", new_position)
