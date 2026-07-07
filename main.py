@@ -54,6 +54,17 @@ def move(position, direction):
 
     elif direction == "right":
         return (row, col + 1)
+    
+def get_children(grid, position):
+    children = []
+
+    possible_moves = get_possible_moves(grid, position)
+
+    for direction in possible_moves:
+        child = move(position, direction)
+        children.append(child)
+
+    return children
 
 start_position = find_position(grid, "S")
 goal_position = find_position(grid, "G")
@@ -65,9 +76,9 @@ possible_moves = get_possible_moves(grid, start_position)
 
 print("Possible Moves:", possible_moves)
 
-for direction in possible_moves:
+children = get_children(grid, start_position)
 
-    new_position = move(start_position, direction)
+print("\nChild Positions:")
 
-    print(f"\nMove: {direction}")
-    print("New Position:", new_position)
+for child in children:
+    print(child)
