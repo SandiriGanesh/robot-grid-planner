@@ -1,3 +1,5 @@
+from collections import deque
+
 grid = [
     ["S", ".", ".", "."],
     ["X", "X", ".", "."],
@@ -66,6 +68,43 @@ def get_children(grid, position):
 
     return children
 
+def is_goal(position, goal):
+    return position == goal
+
+
+def bfs(grid, start, goal):
+
+    queue = deque()
+
+    visited = set()
+
+    queue.append(start)
+
+    visited.add(start)
+
+    while queue:
+
+        current = queue.popleft()
+
+        print("\nExploring:", current)
+
+        if is_goal(current, goal):
+            print("\nGoal Found!")
+            return True
+
+        children = get_children(grid, current)
+
+        for child in children:
+
+            if child not in visited:
+
+                visited.add(child)
+
+                queue.append(child)
+
+    print("\nGoal Not Found!")
+    return False
+
 start_position = find_position(grid, "S")
 goal_position = find_position(grid, "G")
 
@@ -76,9 +115,6 @@ possible_moves = get_possible_moves(grid, start_position)
 
 print("Possible Moves:", possible_moves)
 
-children = get_children(grid, start_position)
+print("\nStarting BFS Search...")
 
-print("\nChild Positions:")
-
-for child in children:
-    print(child)
+bfs(grid, start_position, goal_position)
