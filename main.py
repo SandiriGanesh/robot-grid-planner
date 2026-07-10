@@ -78,9 +78,13 @@ def bfs(grid, start, goal):
 
     visited = set()
 
+    parents = {}
+
     queue.append(start)
 
     visited.add(start)
+
+    parents[start] = None
 
     while queue:
 
@@ -89,7 +93,24 @@ def bfs(grid, start, goal):
         print("\nExploring:", current)
 
         if is_goal(current, goal):
+
             print("\nGoal Found!")
+
+            path = []
+
+            while current is not None:
+                path.append(current)
+                current = parents[current]
+
+            path.reverse()
+
+            print("\nShortest Path:\n")
+
+            for step, position in enumerate(path):
+                print(f"Step {step}: {position}")
+
+            print("\nTotal Moves:", len(path) - 1)
+
             return True
 
         children = get_children(grid, current)
@@ -100,9 +121,12 @@ def bfs(grid, start, goal):
 
                 visited.add(child)
 
+                parents[child] = current
+
                 queue.append(child)
 
     print("\nGoal Not Found!")
+
     return False
 
 start_position = find_position(grid, "S")
